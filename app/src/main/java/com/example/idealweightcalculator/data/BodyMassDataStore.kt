@@ -1,12 +1,11 @@
 package com.example.idealweightcalculator.data
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import com.example.idealweightcalculator.data.local.BmiDao
 
-class BodyMassDataStore() : BodyMassRepository{
+class   BodyMassDataStore(private val BmiDao: BmiDao) : BodyMassRepository{
 
-    override fun getDataFromSource(height: Double, weight: Double): BodyMassItem {
+    override suspend fun getDataFromSource(name: String,height: Double, weight: Double): BodyMassItem {
         var imt = 0.0
         var status = ""
         var heightToMeter = (height.toDouble() / 100) * (height.toDouble() / 100)
@@ -24,21 +23,15 @@ class BodyMassDataStore() : BodyMassRepository{
             }
 
         }
-        return BodyMassItem(imt, status)
+        return BodyMassItem(name, imt, status)
+    }
+
+    override suspend fun getAllBmi(): List<BodyMassItem> = BmiDao.getAllBMI()
+
+    override suspend fun addBmi(bodyMass: BodyMassItem) {
+        BmiDao.insert(bodyMass)
     }
 
 }
 
 
-
-abstract class Testing() : Fragment(){
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-}
-
-class Implement : Testing(){
-
-}

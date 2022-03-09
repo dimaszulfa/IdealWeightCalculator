@@ -2,9 +2,6 @@ package com.example.idealweightcalculator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import com.example.idealweightcalculator.databinding.ActivityMainBinding
 import com.example.idealweightcalculator.presentation.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     //    private val viewModel: MainViewModel by viewModel()
     private val vm: MainViewModel by viewModel()
+
 
     //    private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {

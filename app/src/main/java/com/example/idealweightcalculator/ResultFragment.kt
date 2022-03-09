@@ -45,8 +45,8 @@ class ResultFragment : Fragment() {
 
         val dataBMI = args.bmi
         val dataStatus = args.status
-        binding.halo.text = body.BMI.toString()
-        binding.status.text = body.status
+        binding.halo.text = dataBMI
+        binding.status.text = dataStatus
 
         binding.btnNested.setOnClickListener {
             val toNestedFragment = ResultFragmentDirections.actionResultFragmentToNestedFragment22()

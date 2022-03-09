@@ -27,6 +27,6 @@
         android:id="@+id/btn_nested"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/to_nested_nav"/>
+        android:text="@string/all_data_bmi"/>
 
 </LinearLayout>

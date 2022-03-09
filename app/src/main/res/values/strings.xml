@@ -9,8 +9,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="your_height">Your Height (kg)</string>
-    <string name="your_weight">Your Weight (cm)</string>
+    <string name="your_height">Your Height (cm)</string>
+    <string name="your_weight">Your Weight (kg)</string>
     <string name="calculation">Calculation</string>
     <string name="welcome_to_body_mass_index">Welcome to Body Mass Index</string>
     <string name="your_bmi_0">Your BMI : 0</string>
@@ -18,4 +18,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="to_nested_nav">To Nested Nav</string>
+    <string name="please_input_your_name">Please input your name</string>
+    <string name="all_data_bmi">All Data BMI</string>
 </resources>

@@ -11,9 +11,9 @@ import com.example.idealweightcalculator.domain.DataUseCase
 import kotlinx.coroutines.*
 
 class MainViewModel(private val useCase: DataUseCase) : ViewModel(){
-    private val _imt = MutableLiveData<BodyMass>()
+    private val _imt = MutableLiveData<BodyMass?>()
 
-    val imt : LiveData<BodyMass>
+    val imt : LiveData<BodyMass?>
         get() = _imt
 
     private val _bmi = MutableLiveData<List<BodyMass>>()
@@ -32,7 +32,6 @@ class MainViewModel(private val useCase: DataUseCase) : ViewModel(){
      viewModelScope.launch(Dispatchers.IO){
             delay(1000)
             _imt.postValue(useCase.getCalculate(name,height, weight))
-
 
 
 
@@ -62,6 +61,10 @@ class MainViewModel(private val useCase: DataUseCase) : ViewModel(){
         viewModelScope.launch(Dispatchers.IO){
             useCase.addBmi(bmi)
         }
+    }
+
+    fun clearImt(){
+        _imt.postValue(null)
     }
 
 }

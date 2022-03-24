@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.idealweightcalculator.databinding.FragmentHomeBinding
-import com.example.idealweightcalculator.domain.BodyMass
 import com.example.idealweightcalculator.presentation.MainViewModel
+import com.example.idealweightcalculator.view.BottomSheetDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -28,22 +28,30 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.progressBar.visibility = View.GONE
 
 
 
 
-        vm.imt.observe(viewLifecycleOwner){
+/*        vm.imt.observe(viewLifecycleOwner){
                     val bundle = Bundle().apply {
                         putString("bmi", it.BMI.toString())
                         putString("status", it.status)
                     }
+            vm.addBmi(BodyMass(it.name, it.BMI, it.status))
+
                     findNavController(view).navigate(
                         R.id.action_homeFragment2_to_navigation6,
                         bundle
                     )
-        }
+        }*/
 
+
+        binding.fabAdd.setOnClickListener {
+            val bottomSheet = BottomSheetDialog()
+            bottomSheet.showNow(childFragmentManager, "Fragment")
+
+
+        }
 
         binding.customButton.onClick {
             binding.customButton.loading = true
@@ -60,27 +68,27 @@ class HomeFragment : Fragment() {
                     //loading
                     val result = vm.calculate(name, height, weight)
 
-//                    vm.addBmi(
-//                        BodyMass(
-//                            name,
-//                            result.BMI,
-//                            result.status
-//                        )
-//                    )
+       /*             vm.addBmi(
+                        BodyMass(
+                            name,
+                            22.0,
+                            "NORMAL"
+                        )
+                    )*/
 
 
                     val args = Bundle()
                     /*          args.putString("bmi", result.BMI.toString())
                               args.putString("status", result.status)*/
-                    val toResultFragment =
-                        HomeFragmentDirections.actionHomeFragment2ToNavigation6().apply {
-//                        bmi = result.BMI.toString()
-//                        status = result.status
-                            /*      bmi = result.BMI.toString()
-                                  status = result.status*/
-
-
-                        }
+//                    val toResultFragment =
+//                        HomeFragmentDirections.actionHomeFragment2ToNavigation6().apply {
+////                        bmi = result.BMI.toString()
+////                        status = result.status
+//                            /*      bmi = result.BMI.toString()
+//                                  status = result.status*/
+//
+//
+//                        }
 
 
 //                    vm.imt.observe(viewLifecycleOwner, Observer {
@@ -117,5 +125,12 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    fun toResultFragment(bundle: Bundle){
+        findNavController().navigate(
+            R.id.action_homeFragment2_to_navigation6, bundle
+        )
+    }
 
+
+// (Bundle) -> Unit
 }

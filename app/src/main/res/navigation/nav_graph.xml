@@ -11,19 +11,11 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
+            android:id="@+id/action_homeFragment2_to_bottomSheetDialog"
+            app:destination="@id/bottomSheetDialog" />
+        <action
             android:id="@+id/action_homeFragment2_to_navigation6"
-            app:destination="@id/navigation6">
-           <!-- <argument
-                android:name="bmi"
-                android:defaultValue="bmi"
-                app:argType="string"
-                app:nullable="true" />
-            <argument
-                android:name="status"
-                android:defaultValue="status"
-                app:argType="string"
-                app:nullable="true" />-->
-        </action>
+            app:destination="@id/navigation6" />
     </fragment>
 
     <navigation android:id="@+id/navigation6"
@@ -54,4 +46,12 @@
             android:label="fragment_nested"
             tools:layout="@layout/fragment_nested" />
     </navigation>
+    <dialog
+        android:id="@+id/bottomSheetDialog"
+        android:name="com.example.idealweightcalculator.view.BottomSheetDialog"
+        android:label="BottomSheetDialog" >
+        <action
+            android:id="@+id/action_bottomSheetDialog_to_navigation6"
+            app:destination="@id/navigation6" />
+    </dialog>
 </navigation>

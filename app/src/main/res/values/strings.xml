@@ -20,4 +20,6 @@
     <string name="to_nested_nav">To Nested Nav</string>
     <string name="please_input_your_name">Please input your name</string>
     <string name="all_data_bmi">All Data BMI</string>
+    <string name="tab_alldata">All Data</string>
+    <string name="tab_favdata">Favorite</string>
 </resources>

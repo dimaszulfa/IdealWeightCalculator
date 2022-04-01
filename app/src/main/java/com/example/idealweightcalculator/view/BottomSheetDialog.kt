@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.idealweightcalculator.R
 import com.example.idealweightcalculator.databinding.FragmentBottomSheetDialogBinding
 import com.example.idealweightcalculator.domain.BodyMass
 import com.example.idealweightcalculator.presentation.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -36,10 +39,9 @@ class BottomSheetDialog() : BottomSheetDialogFragment() {
                     putString("bmi", it.BMI.toString())
                     putString("status", it.status)
                 }
-                vm.addBmi(BodyMass(it.name, it.BMI, it.status))
+                vm.addBmi(BodyMass(name=it.name, BMI=it.BMI, status=it.status,isFavorite = it.isFavorite))
 
-//                val toResult = BottomSheetDialogDirections.actionBottomSheetDialogToNavigation6()
-//                findNavController().navigate(R.id.action_bottomSheetDialog_to_navigation6, bundle)
+                this.dismiss()
 
                  vm.clearImt()
 
@@ -78,7 +80,7 @@ class BottomSheetDialog() : BottomSheetDialogFragment() {
 
 
 
-    private val vm: MainViewModel by viewModel()
+    private val vm: MainViewModel by lazy{ requireParentFragment().getViewModel<MainViewModel>()}
     private lateinit var binding: FragmentBottomSheetDialogBinding
     private val nav: NavController? by lazy { activity?.findNavController(R.id.nav_host_fragment) }
 

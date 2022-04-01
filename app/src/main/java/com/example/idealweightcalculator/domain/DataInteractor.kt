@@ -2,6 +2,7 @@ package com.example.idealweightcalculator.domain
 
 import com.example.idealweightcalculator.data.BodyMassItem
 import com.example.idealweightcalculator.data.BodyMassRepository
+import com.example.idealweightcalculator.data.FavoriteEntity
 
 class DataInteractor(private val dataRepository: BodyMassRepository) : DataUseCase{
 
@@ -20,6 +21,24 @@ class DataInteractor(private val dataRepository: BodyMassRepository) : DataUseCa
 
     override suspend fun addBmi(bodyMass: BodyMass) {
         dataRepository.addBmi(bodyMass.toBodyMassItem())
+    }
+
+    override suspend fun getFavorite(): List<Favorite> {
+       return dataRepository.getFavorite().map {
+           it.toFavorite()
+       }
+    }
+
+    override suspend fun addToFavorite(favorite: Favorite) {
+        dataRepository.addToFavorite(favorite.toFavoriteEntity())
+    }
+
+    override suspend fun setFavorite(bodyMass: BodyMass) {
+        dataRepository.setFavorite(bodyMass.toBodyMassItem())
+    }
+
+    override suspend fun deleteFav(fav: Favorite) {
+        dataRepository.deleteFavorite(fav.toFavoriteEntity())
     }
 
 

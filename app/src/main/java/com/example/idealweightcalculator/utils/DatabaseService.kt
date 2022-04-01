@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.idealweightcalculator.data.local.BmiDao
 import com.example.idealweightcalculator.data.local.BmiRoomDatabase
+import com.example.idealweightcalculator.data.local.FavoriteDao
 
 object DatabaseService {
     fun provideDatabase(application: Application): BmiRoomDatabase {
@@ -13,5 +14,9 @@ object DatabaseService {
     }
     fun provideDao(database: BmiRoomDatabase): BmiDao {
         return database.BmiDao()
+    }
+
+    fun provideFav(database: BmiRoomDatabase): FavoriteDao{
+        return database.FavoriteDao()
     }
 }

@@ -8,7 +8,9 @@ import com.example.idealweightcalculator.data.BodyMassItem
 import com.example.idealweightcalculator.data.local.BmiDao
 import com.example.idealweightcalculator.domain.BodyMass
 import com.example.idealweightcalculator.domain.DataUseCase
+import com.example.idealweightcalculator.domain.Favorite
 import kotlinx.coroutines.*
+import okhttp3.Dispatcher
 
 class MainViewModel(private val useCase: DataUseCase) : ViewModel(){
     private val _imt = MutableLiveData<BodyMass?>()
@@ -19,6 +21,10 @@ class MainViewModel(private val useCase: DataUseCase) : ViewModel(){
     private val _bmi = MutableLiveData<List<BodyMass>>()
     val bmi : LiveData<List<BodyMass>>
         get() = _bmi
+
+    private val _favorite = MutableLiveData<List<Favorite>>()
+    val favorite: LiveData<List<Favorite>>
+    get()= _favorite
 
 
 
@@ -60,11 +66,44 @@ class MainViewModel(private val useCase: DataUseCase) : ViewModel(){
     fun addBmi(bmi: BodyMass){
         viewModelScope.launch(Dispatchers.IO){
             useCase.addBmi(bmi)
+            getAllBmi()
         }
     }
 
     fun clearImt(){
         _imt.postValue(null)
+    }
+
+    fun getFavorite(){
+        viewModelScope.launch (Dispatchers.IO){
+            val dataFavorite = useCase.getFavorite()
+            _favorite.postValue(dataFavorite)
+            getAllBmi()
+        }
+    }
+
+    fun addtoFavorite(fav: Favorite){
+        viewModelScope.launch(Dispatchers.IO){
+            useCase.addToFavorite(fav)
+            getFavorite()
+        }
+    }
+
+    fun setFavorite(bmi: BodyMass){
+        viewModelScope.launch (Dispatchers.IO){
+            useCase.setFavorite(bmi)
+            addtoFavorite(bmi.toFavorite())
+            getAllBmi()
+            getFavorite()
+        }
+    }
+
+    fun deleteFav(fav: Favorite){
+        viewModelScope.launch (Dispatchers.IO){
+            useCase.deleteFav(fav)
+//            setFavorite(fav.toBodyMass())
+            getFavorite()
+        }
     }
 
 }

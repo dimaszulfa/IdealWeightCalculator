@@ -1,14 +1,18 @@
 package com.example.idealweightcalculator
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.idealweightcalculator.databinding.FragmentHomeBinding
 import com.example.idealweightcalculator.presentation.MainViewModel
 import com.example.idealweightcalculator.view.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -19,6 +23,10 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+
     }
 
     override fun onCreateView(
@@ -29,92 +37,17 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
-
-
-/*        vm.imt.observe(viewLifecycleOwner){
-                    val bundle = Bundle().apply {
-                        putString("bmi", it.BMI.toString())
-                        putString("status", it.status)
-                    }
-            vm.addBmi(BodyMass(it.name, it.BMI, it.status))
-
-                    findNavController(view).navigate(
-                        R.id.action_homeFragment2_to_navigation6,
-                        bundle
-                    )
-        }*/
-
+        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        val viewPager: ViewPager2 = binding.viewPager
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = binding.tabs
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLE[position])
+        }.attach()
 
         binding.fabAdd.setOnClickListener {
             val bottomSheet = BottomSheetDialog()
             bottomSheet.showNow(childFragmentManager, "Fragment")
-
-
-        }
-
-        binding.customButton.onClick {
-            binding.customButton.loading = true
-            var name = binding.edtName.text.toString()
-            var height = binding.edtHeight.text.toString()
-            var weight = binding.edtWeight.text.toString()
-
-            when {
-                name.isEmpty() -> binding.edtName.error = "Please inout your name"
-                height.isEmpty() -> binding.edtHeight.error = "Please input your height"
-                weight.isEmpty() -> binding.edtWeight.error = "Please input your weight"
-                else -> {
-//                    viewModel.calculate(height,weight)
-                    //loading
-                    val result = vm.calculate(name, height, weight)
-
-       /*             vm.addBmi(
-                        BodyMass(
-                            name,
-                            22.0,
-                            "NORMAL"
-                        )
-                    )*/
-
-
-                    val args = Bundle()
-                    /*          args.putString("bmi", result.BMI.toString())
-                              args.putString("status", result.status)*/
-//                    val toResultFragment =
-//                        HomeFragmentDirections.actionHomeFragment2ToNavigation6().apply {
-////                        bmi = result.BMI.toString()
-////                        status = result.status
-//                            /*      bmi = result.BMI.toString()
-//                                  status = result.status*/
-//
-//
-//                        }
-
-
-//                    vm.imt.observe(viewLifecycleOwner, Observer {
-//                        toResultFragment.bmi = it.BMI.toString()
-//                    })
-//
-//                    vm.imt.observe(viewLifecycleOwner, Observer{
-//                        toResultFragment.status = it.status
-//                    })
-
-
-//                    findNavController(view).navigate(toResultFragment)
-//                    val bundle = Bundle().apply {
-//                        putString("bmi", result.BMI.toString())
-//                        putString("status", result.status)
-//                    }
-//                    findNavController(view).navigate(
-//                        R.id.action_homeFragment2_to_navigation6,
-////                        bundle
-//                    )
-
-
-                }
-
-            }
-
         }
 
 
@@ -125,12 +58,19 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun toResultFragment(bundle: Bundle){
+
+    fun toResultFragment(bundle: Bundle) {
         findNavController().navigate(
             R.id.action_homeFragment2_to_navigation6, bundle
         )
     }
 
-
+    companion object {
+        @StringRes
+        private val TAB_TITLE = intArrayOf(
+            R.string.tab_alldata,
+            R.string.tab_favdata
+        )
+    }
 // (Bundle) -> Unit
 }

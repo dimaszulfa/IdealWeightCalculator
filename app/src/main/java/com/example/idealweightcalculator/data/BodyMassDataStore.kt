@@ -2,12 +2,15 @@ package com.example.idealweightcalculator.data
 
 import androidx.lifecycle.LiveData
 import com.example.idealweightcalculator.data.local.BmiDao
+import com.example.idealweightcalculator.data.local.FavoriteDao
 
-class   BodyMassDataStore(private val BmiDao: BmiDao) : BodyMassRepository{
+class   BodyMassDataStore(private val BmiDao: BmiDao, private val favorite: FavoriteDao) : BodyMassRepository{
 
     override suspend fun getDataFromSource(name: String,height: Double, weight: Double): BodyMassItem {
+        var id = ""
         var imt = 0.0
         var status = ""
+        var isFavorite = false
         var heightToMeter = (height.toDouble() / 100) * (height.toDouble() / 100)
         imt = weight.toDouble() / heightToMeter
 
@@ -23,7 +26,7 @@ class   BodyMassDataStore(private val BmiDao: BmiDao) : BodyMassRepository{
             }
 
         }
-        return BodyMassItem(name, imt, status)
+        return BodyMassItem (id, name, imt, status, isFavorite)
     }
 
     override suspend fun getAllBmi(): List<BodyMassItem> = BmiDao.getAllBMI()
@@ -32,6 +35,17 @@ class   BodyMassDataStore(private val BmiDao: BmiDao) : BodyMassRepository{
         BmiDao.insert(bodyMass)
     }
 
+    override suspend fun getFavorite(): List<FavoriteEntity> = favorite.getAllFavorite()
+
+    override suspend fun addToFavorite(fav: FavoriteEntity) {
+        favorite.addtoFavorite(fav)
+    }
+
+    override suspend fun setFavorite(bodyMass: BodyMassItem) = BmiDao.setFavorite(bodyMass)
+
+    override suspend fun deleteFavorite(fav: FavoriteEntity) {
+        favorite.deleteFav(fav)
+    }
 }
 
 

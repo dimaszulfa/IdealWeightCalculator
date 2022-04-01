@@ -28,7 +28,9 @@ class ResultFragment : Fragment() {
     private val binding get() = _binding!!
     private val body: BodyMass by inject()
 
+/*
     private val args by navArgs<ResultFragmentArgs>()
+*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +45,10 @@ class ResultFragment : Fragment() {
         _binding = FragmentResultBinding.inflate(inflater,container,false)
         val view = binding.root
 
-        val dataBMI = args.bmi
+/*        val dataBMI = args.bmi
         val dataStatus = args.status
         binding.halo.text = dataBMI
-        binding.status.text = dataStatus
+        binding.status.text = dataStatus*/
 
         binding.btnNested.setOnClickListener {
             val toNestedFragment = ResultFragmentDirections.actionResultFragmentToNestedFragment22()

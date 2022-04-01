@@ -11,6 +11,7 @@ import com.example.idealweightcalculator.domain.DataUseCase
 import com.example.idealweightcalculator.presentation.MainViewModel
 import com.example.idealweightcalculator.utils.DatabaseService.provideDao
 import com.example.idealweightcalculator.utils.DatabaseService.provideDatabase
+import com.example.idealweightcalculator.utils.DatabaseService.provideFav
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -20,10 +21,11 @@ val dataBaseModule = module{
 
     single{provideDatabase((androidApplication()))}
     single{provideDao(get())}
+    single{provideFav(get())}
 }
 
 val BodyMassModule = module {
     viewModel { MainViewModel(get())}
     single <DataUseCase>{ DataInteractor(get())}
-    single <BodyMassRepository>{BodyMassDataStore(get())}
+    single <BodyMassRepository>{BodyMassDataStore(get(), get())}
 }

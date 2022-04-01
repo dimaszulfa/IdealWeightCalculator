@@ -80,7 +80,6 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //view binding
-    implementation 'com.github.yogacp:android-viewbinding:1.0.4'
 
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'

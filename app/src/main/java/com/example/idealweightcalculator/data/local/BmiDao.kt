@@ -13,4 +13,15 @@ interface BmiDao {
 
     @Query("SELECT * FROM bmi ORDER by name ASC ")
      fun getAllBMI(): List<BodyMassItem>
+
+     @Query("SELECT * from bmi where isFavorite = 1")
+     fun getFavorite(): List<BodyMassItem>
+
+     @Update
+     fun setFavorite(bmi: BodyMassItem)
+
+
+
+
+
 }

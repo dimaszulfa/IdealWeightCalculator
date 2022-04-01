@@ -12,8 +12,18 @@ class DataInteractor(private val dataRepository: BodyMassRepository) : DataUseCa
     }
 
     override suspend fun getAllBmi(): List<BodyMass> {
+
+        val getFav = getFavorite().map {
+            it.id
+        }
         val item = dataRepository.getAllBmi().map{
-            it.toBodyMass()
+            it.toBodyMass().let{
+                if (getFav.contains(it.id)){
+                    it.copy(isFavorite = true)
+                }else{
+                    it
+                }
+            }
         }
         return item
 
